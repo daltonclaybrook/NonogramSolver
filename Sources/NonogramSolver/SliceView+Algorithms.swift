@@ -21,6 +21,16 @@ extension SliceView {
     /// slice as possible), a hint is superposed if the hint is greater
     /// than the size of the edge gap. This guarantees that the overlapping
     /// slots of the hint are filled.
+    ///
+    ///  Edge gap
+    /// ┌────────┐
+    /// ┌──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┐
+    /// │  │  │  │██│██│██│██│██│  │██│██│██│██│██│██│██│
+    /// ├──┼──┼──┼──┼──┼──┼──┼──┼──┼──┼──┼──┼──┼──┼──┼──┤
+    /// │██│██│██│██│██│  │██│██│██│██│██│██│██│  │  │  │
+    /// └──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┘
+    ///          └─────┘           └───────────┘
+    ///          Overlap              Overlap
     mutating func partiallySolveSuperpositionOfExtremes() {
         let filledCount = hints.reduce(0, +)
         let minimumGaps = hints.count - 1
