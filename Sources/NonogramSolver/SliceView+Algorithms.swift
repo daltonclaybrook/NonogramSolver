@@ -15,4 +15,25 @@ extension SliceView {
             slot = allSlots[index]
         }
     }
+
+    /// When considering the two possible extreme positions of a slice
+    /// (i.e. all painted segments are as close to each edge of the
+    /// slice as possible), a hint is superposed if the hint is greater
+    /// than the size of the edge gap. This guarantees that the overlapping
+    /// slots of the hint are filled.
+    mutating func partiallySolveSuperpositionOfExtremes() {
+        let filledCount = hints.reduce(0, +)
+        let minimumGaps = hints.count - 1
+        let edgeGap = dimensionLength - filledCount + minimumGaps
+
+        var offset = edgeGap
+        hints.forEach { hint in
+            defer { offset += hint + 1 } // add 1 for minimum gap
+            guard hint > edgeGap else { return }
+            let overlap = hint - edgeGap
+            (0..<overlap).forEach {
+                self[offset + $0] = .filled
+            }
+        }
+    }
 }
