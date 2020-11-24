@@ -1,0 +1,3 @@
+# NonogramSolver
+
+Currently collecting some thoughts around how to solve Nonogram puzzles...
